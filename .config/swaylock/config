@@ -1,0 +1,6 @@
+ignore-empty-password
+daemonize
+hide-keyboard-layout
+indicator-caps-lock
+color=101010
+indicator-radius=100

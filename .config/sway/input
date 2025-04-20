@@ -1,0 +1,13 @@
+input "1:1:AT_Translated_Set_2_keyboard" {
+  xkb_layout latam
+  xkb_numlock enabled
+}
+
+input "1739:52781:SYNA2BA6:00_06CB:CE2D_Touchpad" {
+  accel_profile flat
+  click_method clickfinger
+  drag enabled
+  middle_emulation enabled
+  tap enabled
+  tap_button_map lrm
+}

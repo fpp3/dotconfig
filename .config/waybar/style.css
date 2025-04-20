@@ -1,0 +1,40 @@
+* {
+     font-family: monospace;
+     font-size: 12px;
+     min-height: 0;
+}
+
+window#waybar {
+     background: rgba(50, 50, 50, 1);
+     min-height: 0;
+     color: white;
+}
+
+#workspaces button {
+     padding: 0 5px;
+     background: transparent;
+     color: white;
+     /*border-bottom: 3px solid transparent;*/
+}
+
+@define-color col_border_solid rgba(120, 120, 120, 1);
+@define-color col_border_trans rgba(120, 120, 120, 0);
+
+#waybar > box:nth-child(2) > box:nth-child(3) > * > * {
+	padding: 0px 9px 0px 8px;
+}
+
+#waybar > box:nth-child(2) > box:nth-child(3) > *:not(:first-child) > * {
+	background-image: linear-gradient(@col_border_trans, @col_border_solid 45%, @col_border_solid 55%, @col_border_trans);
+	background-size: 2px 60%;
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+}
+
+#waybar > box:nth-child(2) > box:nth-child(1) > :not(:first-child) > * > label {
+	padding: 0px 9px 0px 8px;
+	background-image: linear-gradient(@col_border_trans, @col_border_solid 45%, @col_border_solid 55%, @col_border_trans);
+	background-size: 2px 60%;
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+}

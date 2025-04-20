@@ -1,0 +1,28 @@
+/*
+Aquí puede escribir reglas de CSS reconocidas por GTK+.
+Puede desactivar temporalmente este CSS personalizado pulsando el botón «Pausa» de más arriba.
+
+Los cambios se aplican instantánea y globalmente para toda la aplicación.
+*/
+
+#custom-separator {
+	min-width: 7px;
+	background: white;
+	border-radius: 8px;
+	padding: 0;
+	margin: 4px 0;
+	border: 0;
+}
+
+@define-color col_border_solid rgba(120, 120, 120, 1);
+@define-color col_border_trans rgba(120, 120, 120, 0);
+
+#waybar > box:nth-child(2) > box:nth-child(3) > * label:not(#custom-separator) {
+	padding: 0 8px;
+	/*background-image: linear-gradient(@col_border_trans, @col_border_solid 45%, @col_border_solid 55%, @col_border_trans);*/
+}
+
+#waybar > box:nth-child(2) > box:nth-child(1) > :not(:first-child) > * > label:not(#custom-separator) {
+	padding: 0 8px;
+	/*background-image: linear-gradient(@col_border_trans, @col_border_solid 45%, @col_border_solid 55%, @col_border_trans);*/
+}

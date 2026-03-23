@@ -1,0 +1,6 @@
+keybindings:
+  # Example keybindings (You need to adjust based on your actual sway config)
+  bind:
+    - key: "mod4" # Windows key
+      action: "start"
+    # Add other keybindings as needed...

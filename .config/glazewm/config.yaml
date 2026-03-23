@@ -1,6 +1,167 @@
+# GlazeWM config generated from sway config (fpp3)
+# Target: Windows 11 + GlazeWM + Zebar
+# Notes:
+# - Input/output (keyboard/layout/monitor modes) are omitted intentionally.
+# - Uses only left Windows key as modifier: lwin
+# - Launcher: PowerToys Run (recommended)
+
+general:
+  startup_commands: [
+    # Start Zebar (bar). You can replace with a full path or a bat file if needed.
+    'shell-exec zebar'
+  ]
+
+  # Try to mimic: focus_follows_mouse no
+  focus_follows_cursor: false
+
+  hide_method: 'cloak'
+  show_all_in_taskbar: false
+
+gaps:
+  scale_with_dpi: true
+  inner_gap: '0px'
+  outer_gap:
+    top: '30px'
+    right: '0px'
+    bottom: '0px'
+    left: '0px'
+
+workspaces:
+  - name: '1'
+  - name: '2'
+  - name: '3'
+  - name: '4'
+  - name: '5'
+  - name: '6'
+  - name: '7'
+  - name: '8'
+  - name: '9'
+  - name: '10'
+
+window_rules:
+  # Ignore Zebar windows.
+  - commands: ['ignore']
+    match:
+      - window_process: { equals: 'zebar' }
+
+  # Dialogs / popups floating (approximation of your sway for_window rules).
+  - commands: ['set-floating']
+    match:
+      - window_title: { regex: '^(Open|Save) (File|Folder|As)$' }
+  - commands: ['set-floating']
+    match:
+      - window_title: { regex: '^(Settings|settings)$' }
+
 keybindings:
-  # Example keybindings (You need to adjust based on your actual sway config)
-  bind:
-    - key: "mod4" # Windows key
-      action: "start"
-    # Add other keybindings as needed...
+  # Terminal
+  - commands: ['shell-exec wt']
+    bindings: ['lwin+enter']
+
+  # Close window (sway: $mod+Shift+q)
+  - commands: ['close']
+    bindings: ['lwin+shift+q']
+
+  # Reload config (sway: $mod+Shift+c)
+  - commands: ['wm-reload-config']
+    bindings: ['lwin+shift+c']
+
+  # Exit WM (sway: $mod+Shift+e)
+  - commands: ['wm-exit']
+    bindings: ['lwin+shift+e']
+
+  # Launcher (sway: $mod+d) -> PowerToys Run
+  # Default hotkey in PowerToys is Alt+Space; you can rebind PowerToys to Win+Space
+  # and then use this as a reminder binding by sending that key combo is not supported.
+  - commands: ['shell-exec PowerToys.PowerLauncher']
+    bindings: ['lwin+d']
+
+  # Focus movement (sway vim keys + arrows)
+  - commands: ['focus --direction left']
+    bindings: ['lwin+h', 'lwin+left']
+  - commands: ['focus --direction down']
+    bindings: ['lwin+j', 'lwin+down']
+  - commands: ['focus --direction up']
+    bindings: ['lwin+k', 'lwin+up']
+  - commands: ['focus --direction right']
+    bindings: ['lwin+l', 'lwin+right']
+
+  # Move window
+  - commands: ['move --direction left']
+    bindings: ['lwin+shift+h', 'lwin+shift+left']
+  - commands: ['move --direction down']
+    bindings: ['lwin+shift+j', 'lwin+shift+down']
+  - commands: ['move --direction up']
+    bindings: ['lwin+shift+k', 'lwin+shift+up']
+  - commands: ['move --direction right']
+    bindings: ['lwin+shift+l', 'lwin+shift+right']
+
+  # Workspaces
+  - commands: ['focus --workspace 1']
+    bindings: ['lwin+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['lwin+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['lwin+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['lwin+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['lwin+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['lwin+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['lwin+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['lwin+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['lwin+9']
+  - commands: ['focus --workspace 10']
+    bindings: ['lwin+0']
+
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['lwin+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['lwin+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['lwin+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['lwin+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['lwin+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['lwin+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['lwin+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['lwin+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['lwin+shift+9']
+  - commands: ['move --workspace 10', 'focus --workspace 10']
+    bindings: ['lwin+shift+0']
+
+  # Layout / modes
+  - commands: ['toggle-fullscreen']
+    bindings: ['lwin+f']
+
+  # Floating toggle (sway: $mod+Shift+space)
+  - commands: ['toggle-floating --centered']
+    bindings: ['lwin+shift+space']
+
+  # Cycle focus (sway: $mod+space focus mode_toggle) - closest is cycle focus
+  - commands: ['wm-cycle-focus']
+    bindings: ['lwin+space']
+
+binding_modes:
+  - name: 'resize'
+    keybindings:
+      - commands: ['resize --width -2%']
+        bindings: ['h', 'left']
+      - commands: ['resize --width +2%']
+        bindings: ['l', 'right']
+      - commands: ['resize --height +2%']
+        bindings: ['k', 'up']
+      - commands: ['resize --height -2%']
+        bindings: ['j', 'down']
+      - commands: ['wm-disable-binding-mode --name resize']
+        bindings: ['escape', 'enter']
+
+keybindings2: []

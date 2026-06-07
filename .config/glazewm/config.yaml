@@ -1,32 +1,57 @@
-# GlazeWM config generated from sway config (fpp3)
-# Target: Windows 11 + GlazeWM + Zebar
-# Notes:
-# - Input/output (keyboard/layout/monitor modes) are omitted intentionally.
-# - Modifier is Alt (since Win key combos didn't work reliably in Windows): alt
-# - Launcher: Flow Launcher
-
 general:
-  startup_commands: [
-    # Start Zebar (bar). You can replace with a full path or a script if needed.
-    'shell-exec zebar'
-  ]
-
-  # mimic: focus_follows_mouse no
+  # Configuración de inicio
+  # startup_commands: ['shell-exec yasbc start']
+  config_reload_commands: []
   focus_follows_cursor: false
-
+  toggle_workspace_on_refocus: false
+  cursor_jump:
+    enabled: true
+    trigger: 'monitor_focus'
   hide_method: 'cloak'
   show_all_in_taskbar: false
 
 gaps:
   scale_with_dpi: true
-
-  # Waybar height was 25; keep some breathing room for Zebar on top.
   inner_gap: '0px'
   outer_gap:
-    top: '35px'
+    top: '0px'
     right: '0px'
     bottom: '0px'
     left: '0px'
+
+window_effects:
+  focused_window:
+    border:
+      enabled: true
+      color: '#8dbcff'
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: true
+      style: 'square'
+    transparency:
+      enabled: false
+  other_windows:
+    border:
+      enabled: true
+      color: '#505050'
+    hide_title_bar:
+      enabled: false
+    corner_style:
+      enabled: true
+      style: 'square'
+    transparency:
+      enabled: false
+
+window_behavior:
+  initial_state: 'tiling'
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: true
+    fullscreen:
+      maximized: true
+      shown_on_top: true
 
 workspaces:
   - name: '1'
@@ -41,18 +66,14 @@ workspaces:
   - name: '10'
 
 window_rules:
-  # Ignore Zebar windows.
   - commands: ['ignore']
     match:
-      - window_process: { equals: 'zebar' }
+      - window_process: { equals: 'yasb' }
+      - window_title: { regex: "[Pp]icture.in.[Pp]icture" }
+        window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
 
-  # Dialogs / popups floating (approximation of your sway for_window rules).
-  - commands: ['set-floating']
+  - commands: ['toggle-floating --centered']
     match:
-      - window_title: { regex: '^(Open|Save) (File|Folder|As)$' }
-  - commands: ['set-floating']
-    match:
-      - window_title: { regex: '^(Settings|settings)$' }
 
 binding_modes:
   - name: 'resize'
@@ -69,110 +90,136 @@ binding_modes:
         bindings: ['escape', 'enter']
 
 keybindings:
-  # Terminal
-  - commands: ['shell-exec wt']
-    bindings: ['alt+enter']
-
-  # Close window (sway: $mod+Shift+q)
-  - commands: ['close']
-    bindings: ['alt+shift+q']
-
-  # Reload config (sway: $mod+Shift+c)
-  - commands: ['wm-reload-config']
-    bindings: ['alt+shift+c']
-
-  # Exit WM (sway: $mod+Shift+e)
-  - commands: ['wm-exit']
-    bindings: ['alt+shift+e']
-
-  # Launcher (sway: $mod+d) -> Flow Launcher
-  # If Flow Launcher is installed but not in PATH, replace with full path to Flow.Launcher.exe
-  - commands: ['shell-exec flow']
-    bindings: ['alt+d']
-
-  # Focus movement (sway vim keys + arrows)
+  # Navegación de dirección (hjkl / flechas)
   - commands: ['focus --direction left']
-    bindings: ['alt+h', 'alt+left']
-  - commands: ['focus --direction down']
-    bindings: ['alt+j', 'alt+down']
-  - commands: ['focus --direction up']
-    bindings: ['alt+k', 'alt+up']
+    bindings: ['alt+h', 'alt+left', 'win+left', 'win+h']
   - commands: ['focus --direction right']
-    bindings: ['alt+l', 'alt+right']
+    bindings: ['alt+l', 'alt+right', 'win+right', 'win+l']
+  - commands: ['focus --direction up']
+    bindings: ['alt+k', 'alt+up', 'win+up', 'win+k']
+  - commands: ['focus --direction down']
+    bindings: ['alt+j', 'alt+down', 'win+down', 'win+j']
 
-  # Move window
+  # Movimiento de ventanas
   - commands: ['move --direction left']
-    bindings: ['alt+shift+h', 'alt+shift+left']
-  - commands: ['move --direction down']
-    bindings: ['alt+shift+j', 'alt+shift+down']
-  - commands: ['move --direction up']
-    bindings: ['alt+shift+k', 'alt+shift+up']
+    bindings: ['alt+shift+h', 'alt+shift+left', 'win+shift+left', 'win+shift+h']
   - commands: ['move --direction right']
-    bindings: ['alt+shift+l', 'alt+shift+right']
+    bindings: ['alt+shift+l', 'alt+shift+right', 'win+shift+right', 'win+shift+l']
+  - commands: ['move --direction up']
+    bindings: ['alt+shift+k', 'alt+shift+up', 'win+shift+up', 'win+shift+k']
+  - commands: ['move --direction down']
+    bindings: ['alt+shift+j', 'alt+shift+down', 'win+shift+down', 'win+shift+j']
 
-  # Workspaces
-  - commands: ['focus --workspace 1']
-    bindings: ['alt+1']
-  - commands: ['focus --workspace 2']
-    bindings: ['alt+2']
-  - commands: ['focus --workspace 3']
-    bindings: ['alt+3']
-  - commands: ['focus --workspace 4']
-    bindings: ['alt+4']
-  - commands: ['focus --workspace 5']
-    bindings: ['alt+5']
-  - commands: ['focus --workspace 6']
-    bindings: ['alt+6']
-  - commands: ['focus --workspace 7']
-    bindings: ['alt+7']
-  - commands: ['focus --workspace 8']
-    bindings: ['alt+8']
-  - commands: ['focus --workspace 9']
-    bindings: ['alt+9']
-  - commands: ['focus --workspace 10']
-    bindings: ['alt+0']
+  # Redimensionamiento
+  - commands: ['resize --width -2%']
+    bindings: ['alt+u']
+  - commands: ['resize --width +2%']
+    bindings: ['alt+p']
+  - commands: ['resize --height +2%']
+    bindings: ['alt+o']
+  - commands: ['resize --height -2%']
+    bindings: ['alt+i']
 
-  - commands: ['move --workspace 1', 'focus --workspace 1']
-    bindings: ['alt+shift+1']
-  - commands: ['move --workspace 2', 'focus --workspace 2']
-    bindings: ['alt+shift+2']
-  - commands: ['move --workspace 3', 'focus --workspace 3']
-    bindings: ['alt+shift+3']
-  - commands: ['move --workspace 4', 'focus --workspace 4']
-    bindings: ['alt+shift+4']
-  - commands: ['move --workspace 5', 'focus --workspace 5']
-    bindings: ['alt+shift+5']
-  - commands: ['move --workspace 6', 'focus --workspace 6']
-    bindings: ['alt+shift+6']
-  - commands: ['move --workspace 7', 'focus --workspace 7']
-    bindings: ['alt+shift+7']
-  - commands: ['move --workspace 8', 'focus --workspace 8']
-    bindings: ['alt+shift+8']
-  - commands: ['move --workspace 9', 'focus --workspace 9']
-    bindings: ['alt+shift+9']
-  - commands: ['move --workspace 10', 'focus --workspace 10']
-    bindings: ['alt+shift+0']
-
-  # Fullscreen
-  - commands: ['toggle-fullscreen']
-    bindings: ['alt+f']
-
-  # Floating toggle (sway: $mod+Shift+space)
-  - commands: ['toggle-floating --centered']
-    bindings: ['alt+shift+space']
-
-  # Cycle focus (closest to sway: $mod+space focus mode_toggle)
-  - commands: ['wm-cycle-focus']
-    bindings: ['alt+space']
-
-  # Resize mode toggle (sway: $mod+r)
+  # Modo de redimensionamiento
   - commands: ['wm-enable-binding-mode --name resize']
     bindings: ['alt+r']
 
-  # Screenshots: placeholders (implement with ShareX/Flameshot/PowerToys)
-  # - commands: ['shell-exec ...']
-  #   bindings: ['printscreen']
+  # WM Control
+  - commands: ['wm-toggle-pause']
+    bindings: ['alt+shift+p']
 
-  # Media keys: leave to Windows / apps
+  # Tiling
+  - commands: ['toggle-tiling-direction']
+    bindings: ['alt+v', 'win+v']
 
-# (Removed previous experimental lwin bindings)
+  # Focus cycling
+  - commands: ['wm-cycle-focus']
+    bindings: ['alt+space', 'win+space']
+
+  # Floating
+  - commands: ['toggle-floating --centered']
+    bindings: ['alt+shift+space', 'win+shift+space']
+  - commands: ['toggle-tiling']
+    bindings: ['alt+t']
+
+  # Fullscreen
+  - commands: ['toggle-fullscreen']
+    bindings: ['alt+f', 'win+f']
+
+  # Minimize
+  - commands: ['toggle-minimized']
+    bindings: ['alt+m']
+
+  # Close window
+  - commands: ['close']
+    bindings: ['alt+shift+q', 'win+shift+q']
+
+  # WM Exit
+  - commands: ['wm-exit']
+    bindings: ['alt+shift+e', 'win+shift+e']
+
+  # Reload
+  - commands: ['wm-reload-config']
+    bindings: ['alt+shift+c', 'win+shift+c']
+
+  # Redraw
+  - commands: ['wm-redraw']
+    bindings: ['alt+shift+w', 'win+shift+w']
+
+  # Terminal real
+  - commands: ['shell-exec wt']
+    bindings: ['alt+enter', 'win+enter']
+
+  # Focus workspace
+  - commands: ['focus --workspace 1']
+    bindings: ['alt+1', 'win+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['alt+2', 'win+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['alt+3', 'win+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['alt+4', 'win+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['alt+5', 'win+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['alt+6', 'win+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['alt+7', 'win+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['alt+8', 'win+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['alt+9', 'win+9']
+  - commands: ['focus --workspace 10']
+    bindings: ['alt+0', 'win+0']
+
+  # Move to workspace
+  - commands: ['move --workspace 1']
+    bindings: ['alt+shift+1', 'win+shift+1']
+  - commands: ['move --workspace 2']
+    bindings: ['alt+shift+1', 'win+shift+2']
+  - commands: ['move --workspace 3']
+    bindings: ['alt+shift+1', 'win+shift+3']
+  - commands: ['move --workspace 4']
+    bindings: ['alt+shift+1', 'win+shift+4']
+  - commands: ['move --workspace 5']
+    bindings: ['alt+shift+1', 'win+shift+5']
+  - commands: ['move --workspace 6']
+    bindings: ['alt+shift+1', 'win+shift+6']
+  - commands: ['move --workspace 7']
+    bindings: ['alt+shift+1', 'win+shift+7']
+  - commands: ['move --workspace 8']
+    bindings: ['alt+shift+1', 'win+shift+8']
+  - commands: ['move --workspace 9']
+    bindings: ['alt+shift+1', 'win+shift+9']
+  - commands: ['move --workspace 0']
+    bindings: ['alt+shift+1', 'win+shift+0']
+
+  # Move workspace to monitor
+  - commands: ['move-workspace --direction left']
+    bindings: ['alt+shift+a']
+  - commands: ['move-workspace --direction right']
+    bindings: ['alt+shift+f']
+  - commands: ['move-workspace --direction up']
+    bindings: ['alt+shift+d']
+  - commands: ['move-workspace --direction down']
+    bindings: ['alt+shift+s']

@@ -1,0 +1,192 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/amnweb/yasb/main/schema.json
+watch_stylesheet: true
+watch_config: true
+debug: false
+bars:
+  status-bar:
+    enabled: true
+    screens: ["*"]
+    class_name: "yasb-bar"
+    alignment:
+      position: "top"
+      center: false
+    blur_effect:
+      enabled: false
+      acrylic: false
+      dark_mode: true
+      #round_corners: true
+      border_color: "System"
+    window_flags:
+      always_on_top: true
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 32
+    widgets:
+      left: [
+        "glazewm_workspaces",
+        "active_window"
+      ]
+      center: ["clock"]
+      right:
+        [
+          "volume",
+          "wifi",
+          "cpu",
+          "memory",
+          "battery",
+          "libre_cpu",
+          "systray"
+        ]
+widgets:
+  active_window:
+    type: "yasb.active_window.ActiveWindowWidget"
+    options:
+      label: "{win[title]}"
+      label_alt: "[class_name='{win[class_name]}' exe='{win[process][name]}' hwnd={win[hwnd]}]"
+      label_no_window: ""
+      label_icon: false
+      label_icon_size: 16
+      monitor_exclusive: true
+      max_length: 50
+  glazewm_workspaces:
+    type: "glazewm.workspaces.GlazewmWorkspacesWidget"
+    options:
+      btn_shadow:
+        enabled: false
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "{%H:%M:%S}"
+      label_alt: "{%A, %d %B %Y, %H:%M}"
+      locale: "es_AR" # Langugae for date, you can set your own, example fr_FR
+      calendar:
+        blur: false
+        round_corners: false
+        round_corners_type: "normal"
+        border_color: "System"
+        alignment: "center"
+        direction: "down"
+        show_holidays: true
+        show_week_numbers: true
+        country_code: "AR"
+        holiday_color: "#FF6464"
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "{level} {icon}"
+      tooltip: false
+      volume_icons:
+        - "\uEEE8" # Icon for muted
+        - "\uF026" # Icon for 0-10% volume
+        - "\uF027" # Icon for 11-30% volume
+        - "\uF027" # Icon for 31-60% volume
+        - "\uF028" # Icon for 61-100% volume
+      callbacks:
+        on_left: "exec cmd.exe /c start ms-settings:sound"
+  cpu:
+    type: "yasb.cpu.CpuWidget"
+    options:
+      label: "{info[percent][total]}% \uF4BC"
+      update_interval: 2000
+      callbacks:
+        on_left: "do_nothing"
+  memory:
+    type: "yasb.memory.MemoryWidget"
+    options:
+      label: "{virtual_mem_used} \uEFC5"
+      update_interval: 2000
+      callbacks:
+        on_left: "do_nothing"
+  systray:
+    type: "yasb.systray.SystrayWidget"
+    options:
+      class_name: "systray"
+      label_collapsed: ""
+      label_expanded: ""
+      label_position: "right" # Can be "left" or "right"
+      icon_size: 13 # Can be any integer between 8 and 64
+      pin_click_modifier: "alt" # Can be "ctrl", "alt" or "shift"
+      show_unpinned: true
+      show_unpinned_button: false
+      show_battery: false
+      show_volume: false
+      show_network: false
+      hide_icons: ["GlazeWM", "YASB", "PowerToys", "AutoHotkey64", "Taskmgr", "LibreHardwareMonitor"]
+
+  wifi:
+    type: "yasb.wifi.WifiWidget"
+    options:
+      label: "{wifi_name} ({wifi_strength}%) {wifi_icon}"
+        #tooltip: true
+        #tooltip_label: "{ip_addr}"
+      update_interval: 2000
+      callbacks:
+        on_left: "toggle_menu"
+      ethernet_label: "{ethernet_icon} {ip_addr}"
+      ethernet_label_alt: ""
+      ethernet_icon: "\ueba9"
+      get_exact_wifi_strength: false  # Optional. Will require location access permission if true.
+      wifi_icons: [
+        "\udb82\udd2e",  # Icon for 0% strength
+        "\udb82\udd1f",  # Icon for 1-24% strength
+        "\udb82\udd22",  # Icon for 25-49% strength
+        "\udb82\udd25",  # Icon for 50-74% strength
+        "\udb82\udd28"   # Icon for 75-100% strength
+      ]
+      menu_config:
+        blur: true
+        round_corners: false
+        border_color: "System"
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+        wifi_icons_secured: [
+          "\ue670",
+          "\ue671",
+          "\ue672",
+          "\ue673",
+        ]
+        wifi_icons_unsecured: [
+          "\uec3c",
+          "\uec3d",
+          "\uec3e",
+          "\uec3f",
+        ]
+  battery:
+    type: "yasb.battery.BatteryWidget"
+    options:
+      label: "{percent}% {icon}"
+      update_interval: 2000
+      time_remaining_natural: False
+      callbacks:
+        on_left: "do_nothing"
+      hide_unsupported: True
+      charging_options:
+        icon_format: "{charging_icon}"
+        blink_charging_icon: true
+        blink_interval: 500
+      status_thresholds:
+        critical: 10
+        low: 25
+        medium: 75
+        high: 95
+        full: 100
+      status_icons:
+        icon_charging: "\uf0e7"
+        icon_critical: "\uf244"
+        icon_low: "\uf243"
+        icon_medium: "\uf242"
+        icon_high: "\uf241"
+        icon_full: "\uf240"
+  libre_cpu:
+    type: "yasb.libre_monitor.LibreHardwareMonitorWidget"
+    options:
+      label: "{info[value]}{info[unit]} \uf2c9"
+      sensor_id: "/intelcpu/0/temperature/12"
+      update_interval: 2000
+      precision: 0
+      class_name: "libre-monitor-widget"
+      callbacks:
+        on_middle: "do_nothing"

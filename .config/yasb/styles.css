@@ -1,0 +1,340 @@
+:root {
+    --font-name-primary: "JetBrainsMono NFP", monospace;
+    --font-name-secondary: "JetBrainsMono NFP", monospace;
+
+/* Clean System Color Palette */
+    --bg-taskbar: rgba(25, 25, 25, 1);
+    --bg-primary: rgba(30, 30, 30, 1);
+    --bg-secondary: rgba(30, 30, 30, 1);
+    --bg-hover: rgba(60, 60, 60, 1);
+
+--text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-color: palette(highlight);
+    --separator-color: #444444; /* Neutral dark grey dividers */
+
+/* System State Colors */
+    --color-good: #4cc864;
+    --color-bad: #e81123;
+    --color-warn: #fbc100;
+
+--text-small: 11px;
+    --text-normal: 13px;
+    --text-lg: 14px;
+    --text-xl: 16px;
+    --font-normal: 400;
+    --font-bold: 600;
+}
+
+* {
+    font-size: var(--text-normal);
+    color: var(--text-primary);
+    font-weight: var(--font-normal);
+    font-family: var(--font-name-primary);
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.yasb-bar {
+    padding: 0;
+    margin: 0;
+    background-color: var(--bg-taskbar);
+}
+
+.widget {
+    padding: 0 10px;
+    margin: 8px 0; /* Shrinks the box for the shorter line */
+    background-color: transparent;
+    border-radius: 0;
+    border-right: 1px solid var(--separator-color);
+}
+
+.media-widget {
+    margin: 8px 0;
+    padding: 0 8px;
+}
+
+.widget:hover {
+    background-color: transparent;
+}
+
+.widget .label {
+    padding: 0;
+    font-family: var(--font-name-primary);
+}
+
+.widget .label span {
+    color: var(--accent-color);
+    margin-right: 4px;
+    font-size: var(--text-normal);
+}
+
+/* Unifying all popup menus */
+.audio-menu,
+.calendar {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--separator-color);
+    border-radius: 0px;
+}
+
+.audio-container .device,
+.calendar .calendar-table::item:selected {
+    border-radius: 0px;
+}
+
+/* Workspaces / Tags */
+.glazewm-workspaces {
+    background: transparent;
+}
+.glazewm-workspaces .ws-btn {
+    color: var(--text-secondary);
+    background-color: transparent;
+    padding: 0 5px;
+    margin: 0;
+    min-width: 5px;
+}
+.glazewm-workspaces .ws-btn.active {
+    color: var(--accent-color);
+    font-weight: var(--font-bold);
+}
+
+/* Clock */
+.clock-widget {
+    border-right: none;
+}
+.calendar .calendar-table,
+.calendar .calendar-table::item {
+    background-color: transparent;
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+}
+.calendar .calendar-table::item:selected {
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+}
+.calendar .day-label,
+.calendar .month-label,
+.calendar .date-label,
+.calendar .week-label,
+.calendar .holiday-label {
+    font-size: var(--text-lg);
+    min-width: 250px;
+    max-width: 270px;
+}
+.calendar .week-label {
+    font-weight: var(--font-bold);
+    color: var(--text-secondary);
+}
+.calendar .holiday-label {
+    color: var(--text-primary);
+    font-weight: var(--font-bold);
+}
+.calendar .date-label {
+    font-size: 89px;
+    font-weight: 800;
+    margin-top: -12px;
+}
+
+/* Volume */
+.volume-slider {
+    padding: 8px;
+}
+.audio-container .device {
+    padding: 8px;
+    border: 1px solid transparent;
+}
+.audio-container .device.selected {
+    background-color: var(--bg-hover);
+    border: 1px solid var(--separator-color);
+}
+.audio-container .device:hover {
+    background-color: var(--bg-hover);
+}
+
+/* Cpu */
+.cpu-widget .icon {
+    padding-bottom: 1px;
+}
+.cpu-widget .label {
+    padding-top: 1px;
+}
+
+/* Systray */
+.systray {
+    border-right: none;
+    padding: -3px;
+}
+.systray .unpinned-container {
+    margin: 0px;
+    padding: 0 4px;
+    border-right: none;
+}
+.systray .pinned-container {
+    padding: 0 4px;
+}
+.systray .button {
+    padding: 6px;
+    outline: none;
+}
+.systray .button:hover {
+    background-color: var(--bg-hover);
+}
+.systray .button[dragging="true"] {
+    background-color: var(--bg-hover);
+    border: 1px solid var(--color-good);
+}
+.systray .unpinned-visibility-btn {
+    height: 20px;
+    width: 16px;
+    outline: none;
+}
+
+/* Media Bar Buttons */
+.media-widget .label {
+    padding: 2px 5px 2px 0;
+}
+.media-widget .btn {
+    color: var(--text-secondary);
+    padding: 0 6px;
+    margin: 0 4px;
+    min-width: 10px;
+    background-color: transparent;
+    font-family: "JetBrainsMono NFP", monospace; /* bugfix*/
+}
+.media-widget .btn:hover {
+    color: var(--text-primary);
+}
+.media-widget .btn.play {
+    font-size: var(--text-lg);
+}
+.media-widget .btn.disabled,
+.media-widget .btn.disabled:hover {
+    color: var(--separator-color);
+}
+
+/* Media Popup Menu */
+.media-menu {
+    min-width: 440px;
+    max-width: 540px;
+}
+.media-menu .title,
+.media-menu .artist,
+.media-menu .source {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    margin-left: 20px;
+}
+.media-menu .artist {
+    font-size: var(--text-normal);
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.media-menu .source {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background-color: var(--bg-hover);
+    padding: 4px 8px;
+    margin-top: 10px;
+}
+.media-menu .btn {
+    font-family: "JetBrainsMono NFP", monospace; /* bugfix */
+    font-size: var(--text-lg);
+    margin: 10px 2px 0px 2px;
+    min-width: 40px;
+    max-width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+}
+.media-menu .btn.prev {
+    margin-left: 10px;
+}
+.media-menu .btn:hover {
+    background-color: var(--bg-hover);
+}
+.media-menu .btn.play {
+    background-color: var(--bg-hover);
+    font-size: 20px;
+}
+.media-menu .btn.play:hover {
+    background-color: var(--separator-color);
+}
+.media-menu .btn.disabled,
+.media-menu .btn.disabled:hover {
+    color: var(--separator-color);
+    background-color: transparent;
+}
+
+.media-menu .playback-time {
+    color: var(--text-secondary);
+    margin-top: 20px;
+    min-width: 100px;
+}
+
+/* Media Progress Bar Visibility */
+.media-menu .progress-slider {
+    height: 10px;
+    margin: 10px 4px 14px 4px;
+}
+.media-menu .progress-slider::groove {
+    height: 4px;
+    background: var(--separator-color);
+}
+.media-menu .progress-slider::groove:hover {
+    height: 6px;
+    background: var(--separator-color);
+}
+.media-menu .progress-slider::sub-page {
+    background: var(--accent-color);
+    height: 4px;
+}
+
+.media-menu .app-volume-container {
+    background-color: var(--bg-hover);
+    padding: 8px 6px;
+    margin-left: 10px;
+}
+.media-menu .app-volume-container .volume-slider::groove {
+    background: var(--separator-color);
+    width: 4px;
+}
+.media-menu .app-volume-container .volume-slider::add-page {
+    background: var(--accent-color);
+}
+.media-menu .app-volume-container .volume-slider::groove:hover {
+    background: var(--separator-color);
+    width: 6px;
+}
+.media-menu .app-volume-container .volume-slider::sub-page {
+    background: var(--separator-color);
+}
+.media-menu .app-volume-container .mute-button,
+.media-menu .app-volume-container .unmute-button {
+    font-size: var(--text-lg);
+    margin-top: 4px;
+}
+.media-menu .app-volume-container .unmute-button {
+    color: var(--text-secondary);
+}
+
+/* --- Grouper Toggle Button Hover States --- */
+
+/* 1. Default state: Dim grey */
+.sysinfo-toggle .grouper-button,
+.system-behavior_toggle .grouper-button {
+    color: var(--text-secondary);
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+/* 2. Hover state: Bright white */
+.sysinfo-toggle .grouper-button:hover,
+.system-behavior_toggle .grouper-button:hover {
+    color: var(--text-primary);
+}
+.active-window-widget {
+    border-right: none;
+}

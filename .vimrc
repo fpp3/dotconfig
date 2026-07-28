@@ -18,10 +18,11 @@ set showmode
 set hlsearch
 set history=1000
 set colorcolumn=120
+set tw=120
 
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*.aux,*.fls,*.toc
 
 if &term =~ 'foot'
   let &t_SI = "\e[5 q"
@@ -66,3 +67,6 @@ let g:python3_host_prog="/sbin/python"
 set spellsuggest=best,10
 command! SpellCheck set spelllang=es spell | highlight SpellBad ctermbg=red ctermfg=white | nnoremap gn ]s | nnoremap gp [s | nnoremap da zg | nnoremap dA zG | nnoremap dr zug | nnoremap dR zuG | nnoremap gs z= | nnoremap gc 1z= | echo "gn: sig., gp: ant, da: +dicc, dA: +diccLoc, dr: -dicc, dR: -diccLoc, gs: sugerencias, gc: corregir"
 command! SpellClear set nospell | nunmap gn| nunmap gp| nunmap da| nunmap dA| nunmap dr| nunmap dR| nunmap gs| nunmap gc|
+
+map ll :wa<CR> :make<CR>
+map <C-F10> :w!<CR>:!aspell -d es -c %<CR>:e! %<CR>

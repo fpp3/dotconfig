@@ -1,29 +1,60 @@
 smart_borders yes
 focus_follows_mouse no
 bindsym XF86PowerOff exec --no-startup-id /home/fpp/.config/rofi/scripts/powermenu_t2
+
+# OSD server
+exec swayosd-server
+
+# Sink volume toggle mute
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+# Source volume toggle mute
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
+
+# Volume raise with max value
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise --max-volume 120
+# Volume lower with max value
+bindsym XF86AudioLowerVolume exec swayosd-client --output-volume lower --max-volume 120
+
+# Capslock (If you don't want to use the backend)
+bindsym --release Caps_Lock exec swayosd-client --caps-lock
+
+# Brightness raise with custom value('+' sign needed)
+bindsym XF86MonBrightnessUp  exec swayosd-client --brightness +10
+# Brightness lower with custom value('-' sign needed)
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness -10
+
+# Media control buttons
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
 #Bind media player buttons
-bindsym XF86AudioPlay exec "$HOME/.config/sway/multimedia_handler.sh play-pause"
-bindsym XF86AudioStop exec "$HOME/.config/sway/multimedia_handler.sh stop"
-bindsym XF86AudioPrev exec "$HOME/.config/sway/multimedia_handler.sh previous"
-bindsym XF86AudioNext exec "$HOME/.config/sway/multimedia_handler.sh next"
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +711
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 711- 
+#bindsym XF86AudioPlay exec "$HOME/.config/sway/multimedia_handler.sh play-pause"
+#bindsym XF86AudioStop exec "$HOME/.config/sway/multimedia_handler.sh stop"
+#bindsym XF86AudioPrev exec "$HOME/.config/sway/multimedia_handler.sh previous"
+#bindsym XF86AudioNext exec "$HOME/.config/sway/multimedia_handler.sh next"
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+#bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +711
+#bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 711- 
 
 # Screenshots
-bindsym $mod+Print exec --no-startup-id sway-screenshot --mode output --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M_%d%m%Y).png"
-bindsym $mod+Ctrl+Print exec --no-startup-id sway-screenshot --mode window --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M_%d%m%Y).png"
-bindsym $mod+Shift+Print exec --no-startup-id sway-screenshot --mode region --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M_%d%m%Y).png"
+bindsym $mod+Print exec --no-startup-id sway-screenshot --mode output --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M%S_%d%m%Y).png"
+bindsym $mod+Ctrl+Print exec --no-startup-id sway-screenshot --mode window --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M%S_%d%m%Y).png"
+bindsym $mod+Shift+Print exec --no-startup-id sway-screenshot --mode region --output-folder "$HOME/Imágenes/" --filename "$(date +%H%M%S_%d%m%Y).png"
 
 ## Clipboard Screenshots
 bindsym Print exec --no-startup-id sway-screenshot --mode output --clipboard-only
 bindsym Ctrl+Print exec --no-startup-id sway-screenshot --mode window --clipboard-only
 bindsym Shift+Print exec --no-startup-id sway-screenshot --mode region --clipboard-only
 
+## Kill
+bindsym $mod+Ctrl+Shift+q kill
+
 ## waybar
 exec --no-startup-id waybar
+
 
 ## font
 font pango:monospace 9
@@ -57,10 +88,13 @@ exec --no-startup-id swayidle
 exec --no-startup-id poweralertd
 
 ## Popup Window Resizer
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable;
-for_window [title="(?:Open|Save) (?:File|Folder|As)"] resize set 800 600
+for_window [title="(?:Open|Save|Abrir|Guardar)"] floating enable;
+for_window [title="(?:Open|Save|Abrir|Guardar)"] resize set 800 600
+for_window [title="(?:Rename|Renombrar)"] floating enable;
+for_window [title="(?:Rename|Renombrar)"] resize set 450 100
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
+for_window [window_role="dialog"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
@@ -68,3 +102,4 @@ for_window [window_type="menu"] floating enable
 for_window [window_type="con" title="Autenticación requerida"] floating enable
 for_window [app_id="thunar" title="Progreso de las operaciones de archivo*"] floating enable
 for_window [title="(?:Settings|settings)"] floating enable
+for_window [app_id="google-chrome" title="Meet: Reunión"] floating enable
